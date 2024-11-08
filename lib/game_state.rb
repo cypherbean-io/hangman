@@ -13,4 +13,19 @@ class GameState
   def masked_word
     word.chars.map { |char| guessed_letters.include?(char) ? char : '_' }.join(' ')
   end
+
+  # Returns true if all characters in the word have been guessed
+  def won?
+    word.chars.all? { |char| guessed_letters.include?(char) }
+  end
+
+  # Returns true if the player has no remaining attempts
+  def lost?
+    remaining_attempts.zero?
+  end
+
+  # Returns true if the game is won or lost
+  def game_over?
+    won? || lost?
+  end
 end
