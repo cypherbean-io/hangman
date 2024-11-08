@@ -29,10 +29,16 @@ class GameState
     won? || lost?
   end
 
+  # Check for valid guess, add to guessed letters, and decrement remaining attempts
   def process_guess(letter)
-    return false if letter.nil? || letter.empty? || guessed_letters.include?(letter)
+    return false if invalid_guess?(letter)
 
     @guessed_letters.push(letter)
     @remaining_attempts -= 1 unless word.include?(letter)
+  end
+
+  # Validate the guess is a single letter and hasn't been guessed before
+  def invalid_guess?(letter)
+    letter.nil? || letter.empty? || !letter.match?(/[a-z]/) || guessed_letters.include?(letter)
   end
 end
