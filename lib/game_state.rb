@@ -28,4 +28,11 @@ class GameState
   def game_over?
     won? || lost?
   end
+
+  def process_guess(letter)
+    return false if letter.nil? || letter.empty? || guessed_letters.include?(letter)
+
+    @guessed_letters.push(letter)
+    @remaining_attempts -= 1 unless word.include?(letter)
+  end
 end
