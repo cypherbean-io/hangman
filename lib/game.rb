@@ -11,6 +11,7 @@ class Game
       Display.show_game_state(@game_state)
       process_turn
     end
+    Display.show_result(@game_state)
   end
 
   private

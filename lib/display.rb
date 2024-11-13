@@ -37,7 +37,6 @@ class Display
     ==========",
     "
       +---+
-      |   |
       O   |
      /|\\  |
           |
@@ -67,5 +66,14 @@ class Display
     puts "\nWord: #{game_state.masked_word}"
     puts "Remaining attempts: #{game_state.remaining_attempts}"
     puts "Guessed letters: #{game_state.guessed_letters.join(', ')}"
+  end
+
+  def self.show_result(game_state)
+    show_game_state(game_state)
+    if game_state.won?
+      puts "\nCongratulations! You won! The word was '#{game_state.word}.'"
+    else
+      puts "\nGame over! The word was '#{game_state.word}'"
+    end
   end
 end
