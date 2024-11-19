@@ -20,6 +20,10 @@ class Game
   def process_turn
     print "\nEnter a letter:"
     letter = gets.chomp.downcase
-    @game_state.process_guess(letter)
+
+    return if @game_state.process_guess(letter)
+
+    Display.show_input_error
+    sleep(3)
   end
 end

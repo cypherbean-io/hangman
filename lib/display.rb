@@ -76,4 +76,8 @@ class Display
       puts "\nGame over! The word was '#{game_state.word}'"
     end
   end
+
+  def self.show_input_error
+    puts "\nInvalid input! Please enter a single letter (a-z) that hasn't been guessed."
+  end
 end
