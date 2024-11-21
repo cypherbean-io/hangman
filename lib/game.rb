@@ -50,4 +50,14 @@ class Game
     puts "\nGame saved successfully!"
     sleep(2)
   end
+
+  # Loads a saved game state from a file
+  def self.load_game
+    return unless File.exist?(SAVE_FILE)
+
+    data = JSON.parse(File.read(SAVE_FILE))
+    game = allocate
+    game.instance_variable_set(:@game_state, GameState.from_json(data['game_state']))
+    game
+  end
 end

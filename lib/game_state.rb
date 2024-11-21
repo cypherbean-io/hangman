@@ -42,4 +42,17 @@ class GameState
   def invalid_guess?(letter)
     letter.nil? || letter.empty? || !letter.match?(/[a-z]/) || guessed_letters.include?(letter)
   end
+
+  # Create new game state from JSON data
+  def self.from_json(data)
+    new_state = allocate
+    new_state.instance_variable_set(:@word, data['word'])
+    new_state.instance_variable_set(:@guessed_letters, data['guessed_letters'])
+    new_state.instance_variable_set(:@remaining_attempts, data['remaining_attempts'])
+    new_state
+  end
+
+  private
+
+  attr_writer :word, :guessed_letters, :remaining_attempts
 end
