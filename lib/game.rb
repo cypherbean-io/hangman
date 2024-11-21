@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
+require 'json'
+
 class Game
+  SAVE_FILE = 'saved_game.json'
+
   def initialize(file_path)
     @game_state = GameState.new(WordBank.new(file_path))
   end
@@ -19,11 +23,41 @@ class Game
   # Prompts the player for a letter and processes the guess
   def process_turn
     print "\nEnter a letter:"
-    letter = gets.chomp.downcase
+    input = gets.chomp.downcase
 
-    return if @game_state.process_guess(letter)
+    if input == 'save'
+      save_game
+      return true
+    end
+
+    return if @game_state.process_guess(input)
 
     Display.show_input_error
     sleep(3)
+  end
+
+  # Saves the current game state to a file
+  def save_game
+    game_data = {
+      game_state: {
+        word: @game_state.word,
+        guessed_letters: @game_state.guessed_letters,
+        remaining_attempts: @game_state.remaining_attempts
+      }
+    }
+
+    File.write(SAVE_FILE, JSON.generate(game_data))
+    puts "\nGame saved successfully!"
+    sleep(2)
+  end
+
+  # Loads a saved game state from a file
+  def self.load_game
+    return unless File.exist?(SAVE_FILE)
+
+    data = JSON.parse(File.read(SAVE_FILE))
+    game = allocate
+    game.instance_variable_set(:@game_state, GameState.from_json(data['game_state']))
+    game
   end
 end
