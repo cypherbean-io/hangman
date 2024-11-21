@@ -35,6 +35,7 @@ class GameState
 
     @guessed_letters.push(letter)
     @remaining_attempts -= 1 unless word.include?(letter)
+    true
   end
 
   # Validate the guess is a single letter and hasn't been guessed before
